@@ -72,6 +72,10 @@ class DoublyLinkedList {
   }
 
   deleteAt(index) {
+    if (this.count === 0) {
+      throw new Error("List is empty");
+    }
+
     if (index >= this.count || index < 0) {
       throw new Error("제거할 수 없습니다.");
     }
@@ -79,17 +83,13 @@ class DoublyLinkedList {
     let currentNode = this.head;
 
     if (index == 0) {
-      let deleteNode = this.head;
-      if (this.head.next == null) {
-        this.head = null;
-        this.tail = null;
-      } else {
-        this.head = this.head.next;
+      const removedNode = this.head;
+      this.head = this.head.next;
+      if (this.head) {
         this.head.prev = null;
       }
-      this.head = this.head.next;
       this.count--;
-      return deleteNode;
+      return removedNode.data;
     } else if (index == this.count - 1) {
       let deleteNode = this.tail;
       this.tail.prev.next = null;
